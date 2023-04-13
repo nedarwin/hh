@@ -32,3 +32,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         }
     }
 }
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Получить список объектов, которые нужно отобразить
+        List<String> myObjects = Arrays.asList("f", "f", "f", "f", "f");
+
+        // Создать адаптер и передать список объектов
+        MyAdapter adapter = new MyAdapter(myObjects);
+
+        // Найти RecyclerView в макете и установить адаптер и LayoutManager
+        RecyclerView recyclerView = findViewById(R.id.rc);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+    }
+}
