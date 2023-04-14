@@ -72,3 +72,53 @@ public class MainActivity extends AppCompatActivity {
         android:textSize="16sp" />
 
 </LinearLayout>
+
+// Создаем объект Gson
+Gson gson = new Gson();
+
+// Создаем объект, представляющий тело запроса
+OrderRequest orderRequest = new OrderRequest();
+
+// Заполняем поля объекта orderRequest
+orderRequest.address = "string";
+orderRequest.date_time = "string";
+orderRequest.phone = "string";
+orderRequest.comment = "string";
+orderRequest.audio_comment = "string";
+
+Patient patient = new Patient();
+patient.name = "string";
+
+Item item = new Item();
+item.catalog_id = 1;
+item.price = "string";
+patient.items = new ArrayList<>();
+patient.items.add(item);
+
+orderRequest.patients = new ArrayList<>();
+orderRequest.patients.add(patient);
+
+// Преобразуем объект orderRequest в JSON-строку с помощью Gson
+String json = gson.toJson(orderRequest);
+
+// Создаем экземпляр OkHttp клиента
+OkHttpClient client = new OkHttpClient();
+
+// Создаем тело запроса в формате JSON с помощью json строки
+RequestBody body = RequestBody.create(MediaType.parse("application/json"), json);
+
+// Создаем объект Request
+Request request = new Request.Builder()
+        .url("https://medic.madskill.ru/api/order")
+        .post(body)
+        .addHeader("accept", "application/json")
+        .addHeader("Content-Type", "application/json")
+        .build();
+
+// Отправляем запрос
+try {
+    Response response = client.newCall(request).execute();
+    // Обрабатываем ответ
+} catch (IOException e) {
+    e.printStackTrace();
+}
